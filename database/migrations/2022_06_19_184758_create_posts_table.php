@@ -21,8 +21,11 @@ class CreatePostsTable extends Migration
             $table->text('iframe')->nullable();
             $table->text('body');
             $table->foreignId('category_id');
+            $table->foreignId('user_id');
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

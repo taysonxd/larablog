@@ -14,7 +14,7 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'body', 'iframe', 'excerpt', 'category_id', 'published_at'
+        'title', 'body', 'iframe', 'excerpt', 'category_id', 'published_at', 'user_id'
     ];
 
     protected $dates = ['published_at'];
@@ -31,6 +31,8 @@ class Post extends Model
     }
 
     protected static function create(Array $attributes = []) {
+
+        $attributes['user_id'] = Auth()->user()->id;
 
         $post = static::query()->create($attributes);
 
@@ -55,6 +57,14 @@ class Post extends Model
     	$query->whereNotNull('published_at')
     		  ->where('published_at', '<=', Carbon::now() )
     		  ->latest('published_at');
+    }
+
+    public function scopeAllowed($query) {
+
+        if ( Auth()->user()->can('view', $this) )
+            return $query;
+
+        return $query->where('user_id', auth()->id());
     }
 
     public function photos() {
@@ -91,6 +101,28 @@ class Post extends Model
         $this->url = $url;
         $this->save();
 
+    }
+
+    public function isPublished() {
+        return !is_null($this->published_at) && $this->published_at < today();
+    }
+
+    public function owner() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function viewType($welcome = '') {
+
+        $path = 'layouts.partials';
+
+        if ( $this->photos->count() === 1 )
+            return "{$path}.singlePhoto";
+        else if ( $this->photos->count() > 1 )
+            return $welcome === 'welcome' ? "{$path}.galleryPreview" : "{$path}.carrusel";
+        else if ($this->iframe)
+            return "{$path}.media";
+        else
+            return "{$path}.blank";
     }
 
 }

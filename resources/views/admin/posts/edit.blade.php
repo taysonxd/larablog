@@ -125,6 +125,7 @@
   	<!-- Select2 -->
   	<link rel="stylesheet" href="/adminlte/plugins/select2/css/select2.min.css">
   	<link rel="stylesheet" href="/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css">
 @endpush
 
@@ -136,6 +137,7 @@
 	<script src="/adminlte/plugins/summernote/summernote-bs4.min.js"></script>
 	<!-- Select2 -->
 	<script src="/adminlte/plugins/select2/js/select2.full.min.js"></script>
+	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
 
 	<script>
@@ -152,7 +154,7 @@
 	    });
 
 	    const myDropzone = new Dropzone('.dropzone', {
-	    	url : '/admin/posts/{{ $post->id }}/photos',
+	    	url : '/admin/posts/{{ $post->url }}/photos',
 	    	acceptedFiles : 'image/*',
 	    	maxFilesize : 2,
 	    	paramName : 'photo',

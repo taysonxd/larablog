@@ -14,12 +14,14 @@ class PostsController extends Controller
 {
     public function index() {
 
-    	$posts = Post::get();
-
-    	return view('admin.posts.index', compact('posts'));
+    	return view('admin.posts.index', [
+            'posts' => Post::allowed()->get()
+        ]);
     }
 
     public function create() {
+
+        $this->authorize('create', new Post);
 
     	$categories = Category::all();
     	$tags = Tag::all();
@@ -29,6 +31,8 @@ class PostsController extends Controller
 
     public function store(StorePostRequest $request) {
     	
+        $this->authorize('create', new Post);
+        
         $post = Post::create($request->all());
 
         $post->syncTags($request->input('tags'));
@@ -38,6 +42,8 @@ class PostsController extends Controller
 
     public function edit(Post $post) {
 
+        $this->authorize('update', $post);
+
         $categories = Category::all();
         $tags = Tag::all();
 
@@ -45,6 +51,8 @@ class PostsController extends Controller
     }
 
     public function update(Post $post, StorePostRequest $request) {
+
+        $this->authorize('update', $post);
 
         $post->update($request->all());
 
@@ -54,6 +62,8 @@ class PostsController extends Controller
     }
 
     public function destroy(Post $post) {
+
+        $this->authorize('delete', $post);
 
         $post->delete();
 

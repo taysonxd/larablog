@@ -43,6 +43,9 @@ class PagesController extends Controller
 		
 		$categories = Category::all();
 
-    	return view('postShow', compact('post', 'categories') );
+        if($post->isPublished() || Auth()->check())
+    	   return view('postShow', compact('post', 'categories') );
+
+        abort(404);
     }
 }

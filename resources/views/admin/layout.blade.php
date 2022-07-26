@@ -178,6 +178,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
         <div class="info">
           <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          <span class="text-muted">{{ Auth::user()->getRolesDisplayNames() }}</span>
         </div>
       </div>
 
@@ -219,9 +220,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
-    <div class="p-3">
-      <h5>Title</h5>
-      <p>Sidebar content</p>
+    <div class="d-flex">
+      <form class="ml-auto" method="POST" action="{{ route("logout") }}">
+        @csrf
+        <button type="submit" class="btn btn-link text-white">Cerrar sesiòn</button>
+      </form>
     </div>
   </aside>
   <!-- /.control-sidebar -->

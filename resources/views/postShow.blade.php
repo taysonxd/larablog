@@ -8,27 +8,16 @@
             <!-- Post title-->
             <h1 class="fw-bolder mb-1">{{ $post->title }}</h1>
             <!-- Post meta content-->
-            <div class="text-muted fst-italic mb-2">Posted on {{ $post->published_at->format("d M") }} by Author</div>
+            <div class="text-muted fst-italic mb-2">Posted on {{ optional($post->published_at)->format("d M") }} by {{ $post->owner->name }}</div>
             <!-- Post categories-->
             <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ $post->category->name }}</a>
         </header>
         <!-- Preview image figure-->
-        @if( $post->photos->count() === 1 )
-            <figure class="mb-3">
-                <img class="img-fluid rounded" src="{{ url($post->photos->first()->url) }}" alt="..." />
-            </figure>
-        @elseif( $post->photos->count() > 1 )
-            @include('layouts.partials.carrusel')
-        @elseif($post->iframe)
-            <div class="video">
-                {!! $post->iframe !!}
-            </div>
-        @endif
-        <div>
-            @foreach ($post->tags as $tag)
-                <a class="badge bg-info text-decoration-none link-light" href="#!">#{{ $tag->name }}</a>
-            @endforeach
-        </div>        
+        
+        @include( $post->viewType() )
+        
+        @include('layouts.partials.tags')
+
         <!-- Post content-->
         <section class="mb-5">
             <p class="fs-5 mb-4">

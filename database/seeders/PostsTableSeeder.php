@@ -55,6 +55,7 @@ class PostsTableSeeder extends Seeder
         $post->excerpt = 'Extracto del primer post';
         $post->body = '<p>Contenido del primer post</p>';
         $post->published_at = Carbon::now()->subDays(2);
+        $post->user_id = 1;
         $post->category_id = $category->id;
         $post->save();
 
@@ -66,6 +67,7 @@ class PostsTableSeeder extends Seeder
         $post->excerpt = 'Extracto del segundo post';
         $post->body = '<p>Contenido del segundo post</p>';
         $post->published_at = Carbon::now()->subDays(4);
+        $post->user_id = 1;
         $post->category_id = $category->id;
         $post->save();
 
@@ -77,6 +79,19 @@ class PostsTableSeeder extends Seeder
         $post->excerpt = 'Extracto del tercer post';
         $post->body = '<p>Contenido del tercer post</p>';
         $post->published_at = Carbon::now()->subDays(6);
+        $post->user_id = 2;
+        $post->category_id = $category->id;
+        $post->save();
+
+        $post->tags()->attach(['1']);
+
+        $post = new Post;
+        $post->title = 'Mi cuarto post';
+        $post->url = Str::slug($post->title);
+        $post->excerpt = 'Extracto del cuarto post';
+        $post->body = '<p>Contenido del cuarto post</p>';
+        $post->published_at = Carbon::now()->subDays(6);
+        $post->user_id = 2;
         $post->category_id = $category->id;
         $post->save();
 
