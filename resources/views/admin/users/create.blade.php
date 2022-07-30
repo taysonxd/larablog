@@ -49,7 +49,7 @@
 							</div>
 							<div class="form-group col-md-6">								
 								<label>Permisos</label>
-                  				@include('admin.partials.permissionsCheckboxes', [ 'model' => $User ])
+                  				@include('admin.partials.permissionsCheckboxes', [ 'model' => $user ])
 							</div>
 							<div class="form-group">								
 								<span class="text-muted">La contraseña sera generada automaticamente y enviada al usuario.</span>

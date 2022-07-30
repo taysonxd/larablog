@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Post;
 use App\Models\Category;
+use App\Models\Post;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
     public function home() {
 
-    	$posts = Post::published()->get();
+    	$archive = Post::published();
+        
+        if ( request()->has('month') )
+            $archive->whereMonth('published_at', request('month'));
+
+        if (request()->has('year') )
+            $archive->whereYear('published_at', request('year'));
+
     	$categories = Category::all();
 
-        $posts->load('photos');
+        $posts = $archive->get();
         
     	return view('welcome', compact('posts', 'categories'));
     }
@@ -27,9 +35,17 @@ class PagesController extends Controller
 
     public function archive() {
 
-        $categories = Category::all();
+        \DB::statement("SET lc_time_names = 'es_ES'");
 
-        return view('archive', compact('categories'));
+        $categories = Category::all();
+        $archive = Post::ByMonthByYear()->get();
+
+        return view('archive', [
+            'categories' => $categories,
+            'authors' => User::latest()->take(4)->get(),
+            'posts' => Post::latest()->take(15)->get(),
+            'archive' => $archive
+        ]);
     }
 
     public function contact() {

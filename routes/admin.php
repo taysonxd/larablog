@@ -10,7 +10,8 @@ Route::middleware('auth')
 
 	Route::resource('posts', 'PostsController', ['except' => 'show']);
 	Route::resource('users', 'UsersController', ['except' => 'edit']);
-	Route::resource('roles', 'RolesController');
+	Route::resource('roles', 'RolesController', ['except' => 'show']);
+	Route::resource('permissions', 'PermissionsController', ['only' => ['index' , 'edit', 'update'] ]);
 
 	Route::middleware('role:Admin')
 			->put('users/{user}/roles', 'UserRolesController@update')

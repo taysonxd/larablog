@@ -11,7 +11,7 @@ class TagsController extends Controller
     public function show(Tag $tag) {
 
     	$categories = Category::all();
-    	$posts = $tag->posts()->paginate();
+    	$posts = $tag->posts()->published()->paginate();
 
     	return view('welcome', [
     		'title' => "Publicaciones de la etiqueta '$tag->name'",

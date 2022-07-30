@@ -47,7 +47,7 @@
             </li>
           </ul>
 
-          <a href="#" class="btn btn-primary btn-block"><b>Editar</b></a>
+          <a href="#settings" data-toggle="tab" class="btn btn-primary btn-block"><b>Editar</b></a>
         </div>
         <!-- /.card-body -->
       </div>

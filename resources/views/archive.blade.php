@@ -17,24 +17,63 @@
         <h3>{{ $title }}</h3>
     @endif    
     <div class="row">
-        <div class="col">
-            <div class="card-deck">
-                <!-- Blog post-->
-                Archive
-            </div>
+        <div class="col-6">
+            <span class="h3">                
+                Autores
+            </span>
+            <hr class="divider">
+            <ul class="list-unstyled">
+                @foreach ($authors as $author)
+                    <li class="list-item">{{ $author->name }}</li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="col-6">
+            <span class="h3">                
+                Posts
+            </span>
+            <hr class="divider">
+            <ul class="list-unstyled">
+                @foreach ($posts as $post)
+                    <li class="list-item">
+                        <a href="{{ route('posts.show', $post) }}">
+                            {{ $post->title }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
         </div>
     </div>
-    <!-- Pagination-->
-    <nav aria-label="Pagination">
-        <hr class="my-0" />
-        <ul class="pagination justify-content-center my-4">
-            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-            <li class="page-item"><a class="page-link" href="#!">2</a></li>
-            <li class="page-item"><a class="page-link" href="#!">3</a></li>
-            <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-            <li class="page-item"><a class="page-link" href="#!">15</a></li>
-            <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-        </ul>
-    </nav>        
+    <div class="row">
+        <div class="col-6">
+            <span class="h3">                
+                Categorias
+            </span>
+            <hr class="divider">
+            <ul class="list-unstyled">
+                @foreach ($categories as $category)
+                    <li class="list-item">
+                        <a href="{{ route('categories.show', $category) }}">
+                            {{ $category->name }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="col-6">
+            <span class="h3">                
+                Archivo
+            </span>
+            <hr class="divider">
+            <ul class="list-unstyled">
+                @foreach ($archive as $item)
+                    <li class="list-item">
+                        <a class="text-capitalize" href="{{ route('pages.home', [ 'month' => $item->month, 'year' => $item->year ]) }}">
+                            {{ $item->year }} {{ $item->monthName }} ({{ $item->posts }})
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
 @endsection

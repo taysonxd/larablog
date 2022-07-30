@@ -39,7 +39,13 @@ class DatabaseSeeder extends Seeder
         $updateUserPermission = Permission::create(['name' => 'Update users', 'display_name' => 'Actualizar users']);
         $deleteUserPermission = Permission::create(['name' => 'Delete users', 'display_name' => 'Eliminar users']);
 
-        $updateRolesPermission = Permission::create(['name' => 'Update roles', 'display_name' => 'Actualizar roles']);
+        $viewRolePermission = Permission::create(['name' => 'View roles', 'display_name' => 'Ver roles']);
+        $createRolePermission = Permission::create(['name' => 'Create roles', 'display_name' => 'Crear roles']);
+        $updateRolePermission = Permission::create(['name' => 'Update roles', 'display_name' => 'Actualizar roles']);
+        $deleteRolePermission = Permission::create(['name' => 'Delete roles', 'display_name' => 'Eliminar roles']);
+
+        $viewPermissionsPermission = Permission::create(['name' => 'View permissions', 'display_name' => 'Ver permisos']);
+        $updatePermissionsPermission = Permission::create(['name' => 'Update permissions', 'display_name' => 'Actualizar permisos']);
 
         $adminRole->givePermissionTo([$viewPostPermission, $createPostPermission, $updatePostPermission, $deletePostPermission]);
         $writerRole->givePermissionTo($viewPostPermission);

@@ -5,14 +5,14 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0">
-            	ROLES
+            	PERMISOS
             	<small>Listado</small>
             </h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-              <li class="breadcrumb-item active">Roles</li>
+              <li class="breadcrumb-item active">Permisos</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->	  	
@@ -26,63 +26,40 @@
 		@endif
 		<div class="card">
 	      <div class="card-header">
-	        <h3 class="card-title">Listado de roles</h3>
+	        <h3 class="card-title">Listado de permisos</h3>
 	      </div>
 	      <!-- /.card-header -->
 	      <div class="card-body">
-	      	@can('create', new \Spatie\Permission\Models\Role )
-		      	<div class="row justify-content-end">
-		      		<div class="col-auto">	      			
-		      			<a href="{{ route('admin.roles.create') }}" class="btn btn-sm btn-primary mb-2">Crear role</a>
-		      		</div>
-		      	</div>
-	      	@endcan
-	        <table id="rolesTable" class="table table-bordered table-striped">
+	        <table id="permissionsTable" class="table table-bordered table-striped">
 	          <thead>
 	          <tr>
 	            <th>Id</th>
 	            <th>Identificador</th>
 	            <th>Nombre</th>
-	            <th>Permisos</th>
 	            <th>Guard</th>
 	            <th>Acciones</th>
 	          </tr>
 	          </thead>
 	          <tbody>
-	          	@foreach($roles as $role)
+	          	@foreach($permissions as $permission)
 	          		<tr>
 	          			<td>
-	          				{{ $role->id }}
+	          				{{ $permission->id }}
 	          			</td>
 	          			<td>
-	          				{{ $role->name }}
+	          				{{ $permission->name }}
 	          			</td>
 	          			<td>
-	          				{{ $role->display_name }}
+	          				{{ $permission->display_name }}
 	          			</td>
 	          			<td>
-	          				{{ $role->permissions->pluck('display_name')->implode(', ') }}
+	          				{{ $permission->guard_name }}
 	          			</td>
 	          			<td>
-	          				{{ $role->guard_name }}
-	          			</td>
-	          			<td>
-	          				@can('update', $role)
-		          				<a href="{{ route('admin.roles.edit', $role) }}" class="btn btn-xs btn-primary">
+	          				@can('update', $permission)
+		          				<a href="{{ route('admin.permissions.edit', $permission) }}" class="btn btn-xs btn-primary">
 		          					<i class="fa fa-pencil-ruler"></i>
 		          				</a>
-	          				@endcan
-
-	          				@can('delete', $role)
-		          				@if ( $role->id !== 1)
-			          				<form method="POST" class="d-inline" action="{{ route('admin.roles.destroy', $role) }}">
-			          					@method('DELETE')
-			          					@csrf
-			          					<button type="submit" onclick="return confirm('¿Esta seguro de eliminar este role?')" class="btn btn-xs btn-danger">
-				          					<i class="fa fa-times"></i>
-				          				</button>
-			          				</form>
-		          				@endif
 	          				@endcan
 	          			</td>
 	          		</tr>
